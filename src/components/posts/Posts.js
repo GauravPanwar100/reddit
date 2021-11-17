@@ -5,7 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./Posts.css";
 
 
-export default function Posts({ posts, fetchMoreData, hasMore, fetchPost, initialLimit }) {
+export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPost, initialLimit }) {
 
     // const navigate = useNavigate();
     const history = useHistory();
@@ -42,14 +42,15 @@ export default function Posts({ posts, fetchMoreData, hasMore, fetchPost, initia
 
   return (
     <div className="posts-wrapper" id="scrollableDiv">
-        <InfiniteScroll
+        {/* <InfiniteScroll
             dataLength={posts.length}
             next={fetchMoreData}
             hasMore={hasMore}
             loader={<h4>Loading...</h4>}
             scrollableTarget="scrollableDiv"
-        >
-      {posts && posts.map((post, index) => (
+        > */}
+        {loading && <h4>Loading....</h4>}
+      {!loading && posts && posts.map((post, index) => (
         <div className="post" key={index}>
           <div className="post-sidebar">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -101,7 +102,8 @@ export default function Posts({ posts, fetchMoreData, hasMore, fetchPost, initia
           </div>
         </div>
       ))}
-    </InfiniteScroll>
+      {!loading && posts.length === 0 && <h4>No Post Found</h4>}
+    {/* </InfiniteScroll> */}
     </div>
   );
 }

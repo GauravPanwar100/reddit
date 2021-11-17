@@ -16,6 +16,7 @@ import Demo from "../../Demo";
 export default function MainBar() {
     const [posts, setposts] = useState([]);
     const [initialLimit, setInitialLimit] = useState(10);
+    const [loading, setLoading] = useState(false);
     const [after, setAfter] = useState('');
     const [activeTab, setActiveTab] = useState('hot');
     const [totalPosts, setTotalPosts] = useState([]);
@@ -32,61 +33,42 @@ export default function MainBar() {
             url = url + (after !== '' ? `&&after=${after}` : '');
             res = await axios.get(url);
             setActiveTab('hot');
+            setLoading(true);
         } else if (page === 'new') {
             let url = 'https://www.reddit.com/r/gifs/new.json?limit=' + initialLimit;
             url = url + (after !== '' ? `&&after=${after}` : '');
             console.log(url)
             res = await axios.get(url);
             setActiveTab('new');
+            setLoading(true);
         } else if (page === 'top') {
             let url = `https://www.reddit.com/r/gifs/top.json?limit=${initialLimit}`;
             url = url + (after !== '' ? `&&after=${after}` : '');
             res = await axios.get(url);
             setActiveTab('top');
+            setLoading(true);
         } else {
             res = await axios.get(`https://www.reddit.com/r/gifs.json?limit=${initialLimit}`);
             setActiveTab('hot');
+            setLoading(true);
         }
 
         if (res && res.status === 200) {
             // setTotalPosts(res.data.data.children);
-            setposts(res.data.data.children);
+            
+            setTimeout(() => {
+                setLoading(false); 
+                setposts(res.data.data.children)
+            }, 1000);
+            
+
+            if (activeTab === 'hot') {
+
+            }
             setAfter(res.data.data.after);
         }
         console.log("res>>",res,"afetr",after)
     }
-
-    const fetchMoreData = () => {
-        // a fake async api call like which sends
-        // 20 more records in 1.5 secs
-        console.log("gggg",posts.length)
-        if (posts.length > 100) {
-            setHasMore(false);
-            return;
-        }
-        // setInitialLimit(initialLimit + 10);
-        // fetchPost(activeTab);
-        // let postBreak = [];
-        // postBreak.push(posts.slice(0,10))
-        // setTimeout(() => {
-        //     if (posts.length <= totalPosts.length) {
-        //         setposts(posts.concat(totalPosts.slice(totalPosts.length-posts.length, 10)));
-        //         setHasMore(true);
-        //         return;
-        //     }
-        //     setHasMore(false);
-        // }, 1500);
-    };
-//     useEffect(() => {
-//         var wrapper = document.getElementById('scrollableDiv');
-
-// window.onscroll = function (evt) {
-//   if ((window.scrollTop + window.innerHeight) >= window.scrollHeight) {
-//     alert("jjjj")
-//   }
-// }
-//     }, []);
-    
 
   return (
     <div className="main-bar">
@@ -130,7 +112,7 @@ export default function MainBar() {
         </div>
       </div>
 
-      <Posts posts={posts} fetchMoreData={fetchMoreData()} hasMore={hasMore} fetchPost={fetchPost} initialLimit={() => setInitialLimit(initialLimit + 10)}/>
+      <Posts posts={posts} loading={loading} /*fetchMoreData={fetchMoreData()}*/ hasMore={hasMore} fetchPost={fetchPost} initialLimit={() => setInitialLimit(initialLimit + 10)}/>
       {/* <Demo /> */}
     </div>
   );
