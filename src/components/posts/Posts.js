@@ -51,6 +51,7 @@ export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPos
         > */}
         {loading && <h4>Loading....</h4>}
       {!loading && posts && posts.map((post, index) => (
+          <>
         <div className="post" key={index}>
           <div className="post-sidebar">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -101,6 +102,7 @@ export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPos
             </svg>
           </div>
         </div>
+        </>
       ))}
       {!loading && posts.length === 0 && <h4>No Post Found</h4>}
     {/* </InfiniteScroll> */}

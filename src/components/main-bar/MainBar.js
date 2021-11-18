@@ -12,6 +12,7 @@ import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import "./MainBar.css";
 import Posts from "../posts/Posts";
 import Demo from "../../Demo";
+import Pagination from "../pagination/Pagination";
 
 export default function MainBar() {
     const [posts, setposts] = useState([]);
@@ -19,8 +20,9 @@ export default function MainBar() {
     const [loading, setLoading] = useState(false);
     const [after, setAfter] = useState('');
     const [activeTab, setActiveTab] = useState('hot');
-    const [totalPosts, setTotalPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(10);
 
     useEffect(() => {
         fetchPost();
@@ -70,7 +72,16 @@ export default function MainBar() {
         console.log("res>>",res,"afetr",after)
     }
 
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change Page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
+      <>
     <div className="main-bar">
       {/* <div className="update-card">
         <div className="top-section">
@@ -112,8 +123,11 @@ export default function MainBar() {
         </div>
       </div>
 
-      <Posts posts={posts} loading={loading} /*fetchMoreData={fetchMoreData()}*/ hasMore={hasMore} fetchPost={fetchPost} initialLimit={() => setInitialLimit(initialLimit + 10)}/>
+      <Posts posts={currentPosts} loading={loading} /*fetchMoreData={fetchMoreData()}*/ hasMore={hasMore} fetchPost={fetchPost} initialLimit={() => setInitialLimit(initialLimit + 10)}/>
       {/* <Demo /> */}
+      <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} currentPage={currentPage} />
     </div>
+    
+    </>
   );
 }
