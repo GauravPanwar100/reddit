@@ -13,6 +13,8 @@ import "./MainBar.css";
 import Posts from "../posts/Posts";
 import Demo from "../../Demo";
 import Pagination from "../pagination/Pagination";
+import { postDataAction } from '../../redux/actions/postDataAction';
+import { useDispatch } from 'react-redux';
 
 export default function MainBar() {
     const [posts, setposts] = useState([]);
@@ -23,6 +25,9 @@ export default function MainBar() {
     const [hasMore, setHasMore] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(10);
+
+    //   redux
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetchPost();
@@ -60,9 +65,10 @@ export default function MainBar() {
             
             setTimeout(() => {
                 setLoading(false); 
-                setposts(res.data.data.children)
+                setposts(res.data.data.children);
             }, 1000);
-            
+
+            dispatch(postDataAction(res.data.data.children));
 
             setAfter(res.data.data.after);
         }

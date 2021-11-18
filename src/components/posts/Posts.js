@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate, useHistory } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 import "./Posts.css";
 
@@ -7,6 +8,9 @@ import "./Posts.css";
 export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPost, initialLimit }) {
 
     const history = useHistory();
+
+    const postsList = useSelector((state) => state.postDataReducer.postData);
+    console.log("possss",postsList)
 
     const handleClick = (e, postData) => {
 
@@ -16,7 +20,7 @@ export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPos
   return (
     <div className="posts-wrapper" id="scrollableDiv">
         {loading && <h4>Loading....</h4>}
-      {!loading && posts && posts.map((post, index) => (
+      {!loading && postsList && postsList.map((post, index) => (
           <>
         <div className="post" key={index}>
           <div className="post-sidebar">

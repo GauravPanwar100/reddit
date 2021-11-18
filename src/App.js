@@ -6,8 +6,13 @@ import Home from './components/home/Home';
 import Subreddit from "./components/subredditPage/Subreddit";
 import Demo from "./Demo";
 
+// redux
+import {Provider} from 'react-redux';
+import store from './redux/store'
+
 function App() {
   return (
+    <Provider store={store}>
     <div className="App">
       <Router>
         <Switch>
@@ -21,6 +26,7 @@ function App() {
         </Switch>
       </Router>
     </div>
+    </Provider>
   );
 }
 
