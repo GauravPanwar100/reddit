@@ -1,0 +1,23 @@
+Steps for deployment react application:--
+
+1. firstly deploy the react app on github by making new repository.
+2. now go to package.json file and add below line:--
+      "homepage": "https://myusername.github.io/my-app", (where myusername is github username and my-app is your app name)
+3. now run this command on terminal:-- 
+    npm install --save gh-pages
+4. Add the following scripts in your package.json:
+      "scripts": {
++   "predeploy": "npm run build",
++   "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+
+5. now enter command:--
+    npm run deploy
+
+    and this will make a production build and create a build folder inside working app directory.
+6. now go to github and go to settings, go to pages and under github pages, you will see that our site is published on that url.
+    one important thing to notice is that, we have to wait for 5 mins to perfectly work this url.
+
+Useful Links:--
+1. https://create-react-app.dev/docs/deployment/
