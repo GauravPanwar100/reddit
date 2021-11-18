@@ -18,9 +18,6 @@ function App() {
             <Route path="/subreddit">
                 <Subreddit/>
             </Route>
-            {/* <Route path="/">
-                <Demo/>
-            </Route> */}
         </Switch>
       </Router>
     </div>

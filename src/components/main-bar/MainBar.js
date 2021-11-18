@@ -16,7 +16,7 @@ import Pagination from "../pagination/Pagination";
 
 export default function MainBar() {
     const [posts, setposts] = useState([]);
-    const [initialLimit, setInitialLimit] = useState(10);
+    const [initialLimit, setInitialLimit] = useState(30);
     const [loading, setLoading] = useState(false);
     const [after, setAfter] = useState('');
     const [activeTab, setActiveTab] = useState('hot');
@@ -32,20 +32,20 @@ export default function MainBar() {
         let res;
         if (page === 'hot') {
             let url = `https://www.reddit.com/r/gifs/hot.json?limit=${initialLimit}`;
-            url = url + (after !== '' ? `&&after=${after}` : '');
+            // url = url + (after !== '' ? `&&after=${after}` : '');
             res = await axios.get(url);
             setActiveTab('hot');
             setLoading(true);
         } else if (page === 'new') {
             let url = 'https://www.reddit.com/r/gifs/new.json?limit=' + initialLimit;
-            url = url + (after !== '' ? `&&after=${after}` : '');
+            // url = url + (after !== '' ? `&&after=${after}` : '');
             console.log(url)
             res = await axios.get(url);
             setActiveTab('new');
             setLoading(true);
         } else if (page === 'top') {
             let url = `https://www.reddit.com/r/gifs/top.json?limit=${initialLimit}`;
-            url = url + (after !== '' ? `&&after=${after}` : '');
+            // url = url + (after !== '' ? `&&after=${after}` : '');
             res = await axios.get(url);
             setActiveTab('top');
             setLoading(true);
@@ -64,12 +64,9 @@ export default function MainBar() {
             }, 1000);
             
 
-            if (activeTab === 'hot') {
-
-            }
             setAfter(res.data.data.after);
         }
-        console.log("res>>",res,"afetr",after)
+
     }
 
     // Get current posts
@@ -83,21 +80,6 @@ export default function MainBar() {
   return (
       <>
     <div className="main-bar">
-      {/* <div className="update-card">
-        <div className="top-section">
-          <span>UPDATES FROM REDDIT</span>
-          <CloseIcon className="hoverable" />
-        </div>
-        <div className="body hoverable">
-          <div className="context">
-            <span className="title">Keep yourself safe and informed</span>
-            <br />
-            <span className="description">Visit r/Coronavirus to talk about COVID-19, and visit www.who.int for more information.</span>
-          </div>
-          <img src="./assets/images/pin.jpg" />
-        </div>
-      </div> */}
-
       <div className="filter-container">
         <div className={activeTab === 'hot' ? "filter-element hoverable": "filter-element-secondary hoverable"} onClick={() => fetchPost('hot')}>
           <Whatshot />
@@ -125,7 +107,7 @@ export default function MainBar() {
 
       <Posts posts={currentPosts} loading={loading} /*fetchMoreData={fetchMoreData()}*/ hasMore={hasMore} fetchPost={fetchPost} initialLimit={() => setInitialLimit(initialLimit + 10)}/>
       {/* <Demo /> */}
-      <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} currentPage={currentPage} />
+      {!loading && <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} currentPage={currentPage} />}
     </div>
     
     </>

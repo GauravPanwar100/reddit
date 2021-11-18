@@ -1,54 +1,20 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate, useHistory } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 import "./Posts.css";
 
 
 export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPost, initialLimit }) {
 
-    // const navigate = useNavigate();
     const history = useHistory();
 
     const handleClick = (e, postData) => {
-        console.log(postData,"postData>>",postData.data.permalink, "histro>>", postData.data.url,">>>>>",history)
 
         history.push(`/subreddit${postData.data.permalink}`, {detail: postData.data})
     }
 
-    // const handleScroll = () => {console.log("qwerty")
-    //     const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-    //     const body = document.body;
-    //     const html = document.documentElement;
-    //     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-    //     const windowBottom = windowHeight + window.pageYOffset;
-    //     if (windowBottom >= docHeight) {
-    //         console.log("boottom")
-    //         initialLimit();
-    //         fetchPost();
-    //     } else {
-    //         console.log("not bottom")
-    //     }
-    // }
-
-//    useEffect(() => {
-       
-//     window.addEventListener("scroll", handleScroll);
-
-//        return () => {
-//         window.removeEventListener("scroll", handleScroll);
-//        }
-//    }, [window]);
-
   return (
     <div className="posts-wrapper" id="scrollableDiv">
-        {/* <InfiniteScroll
-            dataLength={posts.length}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            scrollableTarget="scrollableDiv"
-        > */}
         {loading && <h4>Loading....</h4>}
       {!loading && posts && posts.map((post, index) => (
           <>
@@ -105,7 +71,6 @@ export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPos
         </>
       ))}
       {!loading && posts.length === 0 && <h4>No Post Found</h4>}
-    {/* </InfiniteScroll> */}
     </div>
   );
 }

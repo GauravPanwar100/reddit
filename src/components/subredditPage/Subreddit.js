@@ -4,8 +4,6 @@ import './Subreddit.css';
 
 function Subreddit(props) {
     const history = useHistory();
-    console.log("props>>",props, ">>>",history)
-    console.log("<><><>",history.location.state.detail)
     const subRedditData = history.location.state.detail;
     return (
         <div className="posts-wrapper">
