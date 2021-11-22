@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate, useHistory } from "react-router-dom";
-import { useSelector } from 'react-redux';
 
 import "./Posts.css";
 
@@ -8,9 +7,6 @@ import "./Posts.css";
 export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPost, initialLimit }) {
 
     const history = useHistory();
-
-    const postsList = useSelector((state) => state.postDataReducer.postData);
-    console.log("possss",postsList)
 
     const handleClick = (e, postData) => {
 
@@ -20,7 +16,7 @@ export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPos
   return (
     <div className="posts-wrapper" id="scrollableDiv">
         {loading && <h4>Loading....</h4>}
-      {!loading && postsList && postsList.map((post, index) => (
+      {!loading && posts && posts.map((post, index) => (
           <>
         <div className="post" key={index}>
           <div className="post-sidebar">
@@ -33,18 +29,13 @@ export default function Posts({ posts, loading, fetchMoreData, hasMore, fetchPos
             </svg>
           </div>
           <div className="post-title">
-            {/* <img src={post.subreddit.image_src} /> */}
-            {/* <span className="subreddit-name">r/{post.subreddit.name}</span> */}
             <span className="post-user">Posted by</span>
             <span className="post-user underline">u/{post.data.author}</span>
             <span className="post-user">{post.data.num_crossposts} years ago</span>
             <div className="spacer"></div>
-            {/* <Button label="+ JOIN" /> */}
           </div>
           <div className="post-body">
-              {/* <Link to={`/subreddit/${post.data.permalink}`}>{post.data.title}</Link> */}
             <span className="title" onClick={(e) => handleClick(e, post)}>{post.data.title}</span>
-            {/* {post.video_src && <Video src={post.video_src} duration={post.duration} />} */}
             {post.image_src && <img src={post.image_src} />}
             {post.description && <span className="description">{post.description}</span>}
           </div>

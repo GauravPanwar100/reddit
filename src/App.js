@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router, Switch, Route, Redirect
 } from "react-router-dom";
 import './App.css';
-import Home from './components/home/Home';
+import Goal from './components/goal/Goal';
 import Subreddit from "./components/subredditPage/Subreddit";
 import Demo from "./Demo";
 
@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Switch>
             <Route exact path="/">
-                <Home/>
+                <Goal/>
                 {/* <Demo /> */}
             </Route>
             <Route path="/subreddit">

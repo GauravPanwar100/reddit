@@ -19,15 +19,12 @@ function Subreddit(props) {
             </svg>
           </div>
           <div className="post-title">
-            {/* <img src={post.subreddit.image_src} /> */}
-            {/* <span className="subreddit-name">r/{post.subreddit.name}</span> */}
             <span className="post-user">Posted by</span>
             <span className="post-user underline">u/{subRedditData.author}</span>
             <span className="post-user">{subRedditData.num_crossposts} years ago</span>
           </div>
           <div className="post-body">
             <span className="title">{subRedditData.title}</span>
-            {/* {post.video_src && <Video src={post.video_src} duration={post.duration} />} */}
             {subRedditData.thumbnail && <img src={subRedditData.thumbnail} />}
             {subRedditData.selftext && <span className="description">{subRedditData.selftext}</span>}
           </div>
